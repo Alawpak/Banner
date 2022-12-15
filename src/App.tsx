@@ -31,7 +31,7 @@ function App() {
             <Grid item xs = {12} sm = {3} md = {3}> 
               <img src={womanPhone} height={"100%"} width={"100%"}/>
             </Grid>
-
+ASD
             <Grid item xs = {9.5} sm = {3} md = {3}> 
               <Typography gutterBottom marginTop={5} variant="subtitle1">
                 Descarga nuestra app, Mi MetLife

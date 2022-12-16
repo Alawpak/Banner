@@ -5,13 +5,46 @@ import qr from './assets/qr.png'
 import './App.css'
 import Button from '@mui/material/Button';
 import { Box, Container, Grid, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import { CSSProperties } from '@mui/styled-engine'
 
 
 function App() {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches = useMediaQuery('(max-width:727.5px)');
 
-  const imagesStoreButton = [apple, google]; 
+  const imagesStoreButton: string[] = [apple, google];
+  
+  const styleQrHorizontal = {
+    position: "relative",
+    border: "1px solid #d1d1d1",
+    borderRadius: "4px",
+    borderLeft: "5px solid #424242",
+    '&:after': {
+      content: '""',
+      position: "absolute",
+      left: "-0.7em",
+      top: "2.15em",
+      borderRight: "7px solid #424242",
+      borderTop: "7px solid transparent",
+      borderBottom: "7px solid transparent",
+    }
+  }
+
+const styleQrVertical = {
+  position: "relative",
+  border: "1px solid #d1d1d1",
+  borderTop: "5px solid #424242",
+  borderRadius: "4px",
+  '&:after': {
+    content: '""',
+    position: "absolute",
+    left: "2em",
+    top: "-0.65em",
+    borderLeft: "7px solid transparent",
+    borderRight: "7px solid transparent",
+    borderBottom: "7px solid #424242",
+  }
+}
 
   return (
     <footer>
@@ -23,7 +56,6 @@ function App() {
         borderImage: "linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%) 1",
       }}>
         <Container disableGutters = {true}> 
-        
           <Grid container
             columnSpacing={2}
             direction="row">
@@ -31,12 +63,33 @@ function App() {
             <Grid item xs = {12} sm = {3} md = {3}> 
               <img src={womanPhone} height={"100%"} width={"100%"}/>
             </Grid>
-            <Grid item xs = {9.5} sm = {3} md = {3}> 
-              <Typography gutterBottom marginTop={5} variant="subtitle1">
-                Descarga nuestra app, Mi MetLife
+            
+            <Grid item xs = {10} sm = {3} md = {3} sx = {{
+                  paddingTop: {
+                    xs: 4,
+                    sm: 6
+                  },
+                  paddingBottom: {
+                    xs: 2,
+                    sm: 5
+                  }
+                }}> 
+              
+              <Typography gutterBottom
+                sx = {{color: "#333", fontSize: "18px", fontWeight: "bold", 
+                fontFamily: "NotoSans", lineHeight: "1", paddingRight:{
+                  xs: "3em",
+                  sm: "1em"
+                }  }}>
+                           
+                  Descarga nuestra app, Mi MetLife
               </Typography>
-              <Typography variant="body2" marginBottom={3}>
-                Tu protecci&oacute;n a un click de distancia
+              
+              <Typography variant="body2"
+                sx = {{color: "#333", fontSize: "15px", fontWeight: "normal", 
+                fontFamily: "NotoSans", lineHeight: "1"}}>
+
+                  Tu protecci&oacute;n a un click de distancia
               </Typography>
             </Grid>
 
@@ -49,60 +102,41 @@ function App() {
                 sx = {{paddingBottom: {
                   xs: "1em",
                   sm: "0em",
-                  md: "0em",
-                  lg: "0em",
                 }}}
               >
-                <Grid item 
-                container 
-                direction="row"
-                justifyContent="space-evenly" 
-                alignItems="center" sm = {6} xs = {6}
-                sx={{ flexDirection: { xs: "column", sm: "row", md: "row", lg: "row"}}} 
-                >
+                {imagesStoreButton.map(image => (
 
-                    {/**/}
-                  <Grid item> <Button> <img src={apple} width = "80em"/> </Button> </Grid>
-                  <Grid item sx = {{
-                    padding: "0.5em",
-                    border: "1px solid #d1d1d1",
-                    borderRadius: "4px",
-                    borderLeft: {
-                      xs: "2px solid #d1d1d1",
-                      sm: "5px solid #424242"
-                    },
-                    borderTop: {
-                      xs: "5px solid #424242",
-                      sm: "2px solid #d1d1d1"
-                    }
+                  <Grid key = {image}
+                    item 
+                    container 
+                    direction="row"
+                    justifyContent="space-evenly" 
+                    alignItems="center" sm = {6} xs = {6}
+                    sx={{ flexDirection: { xs: "column", sm: "row", md: "row", lg: "row"}}} 
+                    >
 
-                  }}> <img src={qr} width = "60em" /> </Grid>
+                    <Grid item> 
 
-                </Grid>
-                
-                <Grid item
-                container 
-                direction="row" 
-                justifyContent="space-evenly" 
-                alignItems="center" sm = {6} xs = {6}
-                sx={{ flexDirection: { xs: "column", sm: "row", md: "row", lg: "row"}}} >
+                      <Button sx = {{padding: "0"}}> <img src={image} width = "80em"/> </Button> 
+                    </Grid>
+                    
+                    {matches == true?(
+                      <Grid item
+                      margin={1}
+                      sx = {styleQrVertical}>
 
-                  <Grid item> <Button> <img src={google} width = "80em"/> </Button> </Grid>
-                  <Grid item sx = {{
-                    padding: "0.5em",
-                    border: "1px solid #d1d1d1",
-                    borderRadius: "4px",
-                    borderLeft: {
-                      xs: "2px solid #d1d1d1",
-                      sm: "5px solid #424242"
-                    },
-                    borderTop: {
-                      xs: "5px solid #424242",
-                      sm: "2px solid #d1d1d1"
-                    }
+                      <img src={qr} width = "60em" style={{ padding: "0.5em"}}/> 
+                    </Grid>
+                    ) :(
+                      <Grid item
+                      margin={1}
+                      sx = {styleQrHorizontal}>
 
-                  }}> <img src={qr} width = "60em"/> </Grid>
-                </Grid>
+                      <img src={qr} width = "60em" style={{ padding: "0.5em"}}/> 
+                    </Grid>
+                    )}
+                  </Grid>
+                ))}
 
               </Grid>
 
